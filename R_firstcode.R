@@ -26,3 +26,15 @@ plot(l2011$B4_sre, col=cl)   # si utlizza il dollaro per legare due cose, in que
 
 nir <- l2011[[4]]    # o nir <- l2011$B4_sre
 plot(nir, col=cl)
+
+# lezione 17 marzo
+
+# RGB plotting    colori rosso verde blu
+plotRGB(l2011, r=3, g=2, b=1, stretch="Lin")  # Ho cambiato banda di riflessione, così ho slittato di una banda quelli precedenti, così che si possa vedere la banda dell' infrarosso
+plotRGB(l2011, r=4, g=3, b=2, stretch="Lin")  # ho messo l'infrarosso nella banda verde
+plotRGB(l2011, r=3, g=2, b=4, stretch="Lin")
+
+# Multiframe with natural and false colours
+par(mfrow=c(2,1))
+plotRGB(l2011, r=3, g=2, b=1, stretch="Lin")
+plotRGB(l2011, r=4, g=3, b=2, stretch="Lin")
