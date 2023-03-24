@@ -1,0 +1,6 @@
+# calculating spectral indices
+
+library(raster)
+setwd("C:/lab/")
+
+# exercise: import defor1_,png
