@@ -1,6 +1,31 @@
 # calculating spectral indices
 
-library(raster)
-setwd("C:/lab/")
+  library(raster)
+  setwd("C:/lab/")
 
-# exercise: import defor1_,png
+  # exercise: import defor1_.png
+
+  l1992 <- brick("defor1_.png")  #l1992 percge la prima immagine è del 1992
+
+  #exercise: plot the image via plotRGB
+
+  plotRGB(l1992, r=1, g=2, b=3, stretch="Lin")
+
+  #What is NIR?
+  
+  l2006 <- brick("defor2_.png")
+  l2006
+  
+  
+  
+ #exercise :calculate DVi for 1992
+ dvi1992 = l1992 [[1]] - l1992[[2]]
+ dvi1992
+ 
+ cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifying a color scheme
+plot(dvi1992, col=cl)
+
+
+
+
+
