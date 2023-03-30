@@ -26,6 +26,15 @@
 plot(dvi1992, col=cl)
 
 
+# giovedì 30 marzo
+
+library(raster)
+setwd("C:/lab/") 
+l2006 <- brick("defor2_.png")
+plotRGB(l2006, 1, 2, 3, stretch="Lin")
+
+
+
 
 
 
