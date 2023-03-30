@@ -50,9 +50,18 @@ difdvi = dvi1992 - dvi2006
 cld <- colorRampPalette(c("blue", "white", "red"))(100)
 plot(difdvi, col = cld)
 
+# Hence, NDVI can be used to compare images with a different radiometric resolution
 
+# NDVI 1992
+ndvi1992 = dvi1992 / (l1992[[1]] + l1992[[2]])
+plot(ndvi1992, col = cl)
 
+#NDVI 2006
+ndvi2006 = dvi2006 / (l2006[[1]] + l2006[[2]])
+plot(ndvi2006, col= cl)
 
+difndvi = ndvi1992 - ndvi2006
+plot(difndvi, col= cld)
 
 
 
