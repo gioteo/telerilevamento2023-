@@ -26,12 +26,33 @@
 plot(dvi1992, col=cl)
 
 
-# giovedì 30 marzo
+# giovedì 30 marzo 
+#importing the most recent image 
 
 library(raster)
 setwd("C:/lab/") 
 l2006 <- brick("defor2_.png")
 plotRGB(l2006, 1, 2, 3, stretch="Lin")
+
+#exercise plot the image from 1992 ontop of that of 2006
+
+par(mfrow=c(2,1))
+plotRGB(l1992, r=1, g=2, b=3, stretch="Lin")
+plotRGB(l2006, 1, 2, 3, stretch="Lin")
+
+#exercise calculate dvi for 2006
+dvi2006 = l2006 [[1]] - l2006[[2]]  # infrarosso 1, rosso 2
+dvi2006
+plot(dvi2006, col=cl)
+
+#multitemporal analysis
+difdvi = dvi1992 - dvi2006
+cld <- colorRampPalette(c("blue", "white", "red"))(100)
+plot(difdvi, col = cld)
+
+
+
+
 
 
 
