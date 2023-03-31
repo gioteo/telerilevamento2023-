@@ -32,3 +32,6 @@ plotRGB(TGr, r = 2, g = 3, b = 4, stretch = "lin")
 dift <- TGr[[2]] - TGr[[1]]
 cl <- colorRampPalette(c("blue","light blue","pink","red"))(100)
 plot(TGr, col=cl)
+
+
+# Nuovo studio. scaricato i dati della cartela En per fare una analisi multitemporale delle emissioni di ossidi di azoto in europa
