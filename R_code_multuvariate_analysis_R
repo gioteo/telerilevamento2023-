@@ -1,0 +1,61 @@
+#how to 
+
+library(raster)
+libray(ggplot2)
+library(viridis)
+
+setwd("C:/lab/")
+
+sen <- brick("sentinel.png")
+plot(sen)
+
+#stack serve a mettere insieme le 3 bande, banda 1 banda 2 banda 3 
+
+sen2 <- stack(sen[[1]], sen[[2]], sen[[3]])
+plot(sen2)
+
+pairs(sen2)  # nel primo pannello laterale avremo la distribuzione dei pixel...... 
+
+pairs(sen) # utilizziamo nella cosa originale, dove si vede la 4 banda, l'abbiamo tolta perchè la 4 banda è sempre fissa, e non ci serve 
+
+# random sample è una funzione prend eun campione random dei nostri pixel
+
+sample <- sampleRandom(sen2, 10000)
+sample
+
+
+pca <- prcomp(sample)  #pca=principal component analysis,  è un modello cghe ha preso i valori e li ha messi in una sola nuova dimensione 
+summary(pca)                         #   la prima componente principale è >70%
+
+#pc map
+
+pci <- predict(sen2, pca, index=c(1:3))    #sull'immagine sen 2 dalla pca
+plot(pci)
+
+plot(pci[[1]])
+
+#ggplot
+
+pcid <- as.data.frame(pci[[1]], xy=T)
+pcid
+
+ggplot() +
+geom_raster(pcid, mapping = aes(x=x, y=y, fill=PC1)) +
+scale_fill_viridis()
+
+ggplot() +
+  geom_raster(pcid, mapping = aes(x=x, y=y, fill=PC1)) +
+  scale_fill_viridis(direction = -1)          # direction =-1 in case of reverse
+  
+  # focal sd
+  
+  sd3 <- focal(pci[[1]], matrix(1/9, 3, 3), fun=sd)
+  
+  sd3d <- as.data.frame(sd3, xy=T)
+  
+  #manca l'ultimo codice 
+  
+
+
+
+
