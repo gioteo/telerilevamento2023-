@@ -13,8 +13,21 @@
 
   #What is NIR?
   
+# layer 1 = NIR
+# layer 2 = red
+# layer 3 = green
+  
+  # import defor2_.jpg -> give it the name l2006
+  
   l2006 <- brick("defor2_.png")
   l2006
+  
+  plotRGB(l2006, r=1, g=2, b=3, stretch="lin")
+  
+  par(mfrow=c(2,1))
+  plotRGB(l1992, r=1, g=2, b=3, stretch="lin")
+  plotRGB(l2006, r=1, g=2, b=3, stretch="lin")
+
   
   
   
