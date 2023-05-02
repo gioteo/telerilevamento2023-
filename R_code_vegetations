@@ -24,6 +24,8 @@
   
   plotRGB(l2006, r=1, g=2, b=3, stretch="lin")
   
+  # Exercise: plot in a multiframe the two images with one on top of the other
+  
   par(mfrow=c(2,1))
   plotRGB(l1992, r=1, g=2, b=3, stretch="lin")
   plotRGB(l2006, r=1, g=2, b=3, stretch="lin")
@@ -31,12 +33,17 @@
   
   
   
- #exercise :calculate DVi for 1992
+ #exercise :calculate DVi for 1992,     #DVI is difference vegetation index
  dvi1992 = l1992 [[1]] - l1992[[2]]
  dvi1992
  
- cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifying a color scheme
+cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifying a color scheme
 plot(dvi1992, col=cl)
+
+dvi2006 = l2006[[1]] - l2006[[2]]
+dvi2006
+
+plot(dvi2006, col = cl)
 
 
 # giovedì 30 marzo 
