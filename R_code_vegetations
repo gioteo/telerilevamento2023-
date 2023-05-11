@@ -33,7 +33,7 @@
   
   
   
- #exercise :calculate DVi for 1992,     #DVI is difference vegetation index
+ #exercise :calculate DVi for 1992,     #DVI is "difference vegetation index"
  dvi1992 = l1992 [[1]] - l1992[[2]]
  dvi1992
  
