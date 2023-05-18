@@ -2,3 +2,5 @@
 
 install.packages("sdm")
 library(sdm)
+
+library(rgdal) # Species
