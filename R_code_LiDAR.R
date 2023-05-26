@@ -22,3 +22,7 @@ ggtitle("dsm_2013)
 dtm_2013 <- raster("2013Elevation_DigitalTerrainModel-0.5m.tif")
 
 
+
+
+
+
