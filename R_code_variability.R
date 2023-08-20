@@ -1,29 +1,8 @@
 #How to measure landscape variability with R
 
-library(raster)  # or require()
-library(patchwork)
-library(ggplot2)
 
-setwd("C:/lab/")
 
-sen <- brick("sentinel.png")
 
-# band 1 = NIR
-# band 2 = red
-# band 3 = green
-
-plotRGB(sen, 1,2,3, stretch = "Lin") 
-plotRGB(sen, 2,1,3, stretch = "Lin") 
-
-# standard deviation on the NIR band
-
-nir <- sen[[1]]
-mean3 <- focal(nir,matrix(1/9, 3, 3), fun=mean)    # matrix function 
-
-plot(mean3)
-
-sd3 <- focal(nir,matrix(1/9, 3, 3), fun=sd) 
-plot(sd3)
 
 
 
