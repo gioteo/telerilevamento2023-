@@ -1,39 +1,6 @@
-#How to measure landscape variability with R
 
 
 
-
-
-
-
-sd3d <- as.data.frame(sd3, xy=TRUE)
-sd3d
-
-ggplot() +
-geom_raster(sd3, mapping=aes(x=x, y=y, fill=layer)) +        # x corrisponde alla x dell'immagine, y corrisponde a y dell'immagine, fill corrisponde al nome
-ggtitle("standard deviation moving window 3x3")      
-
-# darà errore 
-
-
-
-sd3d <- as.data.frame(sd3, xy=TRUE)
-sd3d
-
-ggplot() +
-geom_raster(sd3d, mapping=aes(x=x, y=y, fill=layer)) +        # x corrisponde alla x dell'immagine, y corrisponde a y dell'immagine, fill corrisponde al nome
-ggtitle("standard deviation moving window 3x3")  
-
-
-# using viridis
-
-install.packages("viridis")
-library(viridis)
-
-ggplot() +
-geom_raster(sd3d, mapping =aes(x=x, y=y, fill=layer)) +
-scale_fill_viridis() +
-ggtitle("Standard deviation by viridis package")
 
 # cividis
 ggplot() +
