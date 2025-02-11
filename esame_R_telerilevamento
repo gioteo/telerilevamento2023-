@@ -1,0 +1,519 @@
+#installo i pacchetti che mi interessano
+
+install.packages("raster")
+install.packages("ggplot2")
+install.packages("viridis")
+install.packages("rasterVis")
+install.packages("tidyr")       
+install.packages("cleaR")
+#carico i pacchetti scaricati
+
+library(raster) 
+library(ggplot2)
+library(viridis)
+library(rasterVis)
+library(tidyr)
+library(cleaR)
+
+#setto la working directory
+
+setwd("C:/0_pontepaleparto")
+
+
+rlist_2017<-list.files(pattern = "2017-06-09")
+rlist_2017
+
+import_2017 <- lapply(rlist_2017, raster)
+import_2017
+
+img2017 <- stack(import_2017)
+img2017
+names(img2017) <- c("B02", "B03", "B04", "B11", "B12", "B8A")
+img2017
+
+
+
+plot(img2017)
+dev.off()
+
+ext <- extent(16.49635951016795, 16.648771310760726, 39.406318433149934, 39.50102523622246)
+cropped_img2017 <- crop(img2017, ext)
+cropped_img2017
+
+
+
+
+pdf("img2017.pdf")
+
+par(mfrow = c(1,2))
+
+plotRGB(cropped_img2017,3,2,1, stretch = "lin")
+plotRGB(cropped_img2017,6,3,2, stretch = "lin")
+dev.off()
+
+
+
+rlist_2018<- list.files(pattern = "2018-07-04")
+rlist_2019<- list.files(pattern = "2019-07-24")
+rlist_2020<- list.files(pattern = "2020-07-28")
+rlist_2021<- list.files(pattern = "2021-07-23")
+rlist_2022<- list.files(pattern = "2022-08-02")
+rlist_2023<- list.files(pattern = "2023-07-13")
+rlist_2024<- list.files(pattern = "2024-07-27")
+
+
+import_2018 <- lapply(rlist_2018, raster)
+import_2019 <- lapply(rlist_2019, raster)
+import_2020 <- lapply(rlist_2020, raster)
+import_2021 <- lapply(rlist_2021, raster)
+import_2022 <- lapply(rlist_2022, raster)
+import_2023 <- lapply(rlist_2023, raster)
+import_2024 <- lapply(rlist_2024, raster)
+
+
+
+
+img2018 <- stack(import_2018)
+img2019 <- stack(import_2019)
+img2020 <- stack(import_2020)
+img2021 <- stack(import_2021)
+img2022 <- stack(import_2022)
+img2023 <- stack(import_2023)
+img2024 <- stack(import_2024)
+
+cropped_img2018 <- crop(img2018, ext)
+cropped_img2019 <- crop(img2019, ext)
+cropped_img2020 <- crop(img2020, ext)
+cropped_img2021 <- crop(img2021, ext)
+cropped_img2022 <- crop(img2022, ext)
+cropped_img2023 <- crop(img2023, ext)
+cropped_img2024 <- crop(img2024, ext)
+
+
+par(mfrow = c(1,2))
+plotRGB(cropped_img2018,3,2,1, stretch = "lin")
+plotRGB(cropped_img2018,6,3,2, stretch = "lin")
+dev.off()
+
+par(mfrow = c(1,2))
+plotRGB(cropped_img2019,3,2,1, stretch = "lin")
+plotRGB(cropped_img2019,6,3,2, stretch = "lin")
+dev.off()
+
+par(mfrow = c(1,2))
+plotRGB(cropped_img2020,3,2,1, stretch = "lin")
+plotRGB(cropped_img2020,6,3,2, stretch = "lin")
+dev.off()
+
+
+par(mfrow = c(1,2))
+plotRGB(cropped_img2021,3,2,1, stretch ="lin")
+plotRGB(cropped_img2021,6,3,2, stretch ="lin")
+dev.off()
+
+
+par(mfrow = c(1,2))
+plotRGB(cropped_img2022,3,2,1, stretch ="lin")
+plotRGB(cropped_img2022,6,3,2, stretch ="lin")
+dev.off()
+
+
+par(mfrow = c(1,2))
+plotRGB(cropped_img2023,3,2,1, stretch ="lin")
+plotRGB(cropped_img2023,6,3,2, stretch ="lin")
+dev.off()
+
+
+par(mfrow = c(1,2))
+plotRGB(cropped_img2024,3,2,1, stretch ="lin")
+plotRGB(cropped_img2024,6,3,2, stretch ="lin")
+dev.off()
+
+
+
+par(mfrow = c(3,3))
+plotRGB(cropped_img2017,3,2,1, stretch = "lin", main ="2017_TC")
+plotRGB(cropped_img2018,3,2,1, stretch = "lin", main ="2018_TC")
+plotRGB(cropped_img2019,3,2,1, stretch = "lin", main ="2019_TC")
+plotRGB(cropped_img2020,3,2,1, stretch = "lin", main ="2020_TC")
+plotRGB(cropped_img2021,3,2,1, stretch = "lin", main ="2021_TC")
+plotRGB(cropped_img2022,3,2,1, stretch = "lin", main ="2022_TC")
+plotRGB(cropped_img2023,3,2,1, stretch = "lin", main ="2023_TC")
+plotRGB(cropped_img2024,3,2,1, stretch = "lin", main ="2024_TC")
+
+
+dev.off()
+
+
+par(mfrow = c(3,3))
+plotRGB(cropped_img2017,6,3,2, stretch = "lin", main ="2017_TC")
+plotRGB(cropped_img2018,6,3,2, stretch = "lin", main ="2018_TC")
+plotRGB(cropped_img2019,6,3,2, stretch = "lin", main ="2019_TC")
+plotRGB(cropped_img2020,6,3,2, stretch = "lin", main ="2020_TC")
+plotRGB(cropped_img2021,6,3,2, stretch = "lin", main ="2021_TC")
+plotRGB(cropped_img2022,6,3,2, stretch = "lin", main ="2022_TC")
+plotRGB(cropped_img2023,6,3,2, stretch = "lin", main ="2023_TC")
+plotRGB(cropped_img2024,6,3,2, stretch = "lin", main ="2024_TC")
+
+
+dev.off()
+
+
+#NDVI
+
+DVI_2017<- cropped_img2017[[6]]-cropped_img2017[[3]]
+DVI_2018<- cropped_img2018[[6]]-cropped_img2018[[3]]
+DVI_2019<- cropped_img2019[[6]]-cropped_img2019[[3]]
+DVI_2020<- cropped_img2020[[6]]-cropped_img2020[[3]]
+DVI_2021<- cropped_img2021[[6]]-cropped_img2021[[3]]
+DVI_2022<- cropped_img2022[[6]]-cropped_img2022[[3]]
+DVI_2023<- cropped_img2023[[6]]-cropped_img2023[[3]]
+DVI_2024<- cropped_img2024[[6]]-cropped_img2024[[3]]
+
+
+
+NDVI_2017<- DVI_2017/(cropped_img2017[[6]]+cropped_img2017[[3]])
+NDVI_2018<- DVI_2018/(cropped_img2018[[6]]+cropped_img2018[[3]])
+NDVI_2019<- DVI_2019/(cropped_img2019[[6]]+cropped_img2019[[3]])
+NDVI_2020<- DVI_2020/(cropped_img2020[[6]]+cropped_img2020[[3]])
+NDVI_2021<- DVI_2021/(cropped_img2021[[6]]+cropped_img2021[[3]])
+NDVI_2022<- DVI_2022/(cropped_img2022[[6]]+cropped_img2022[[3]])
+NDVI_2023<- DVI_2023/(cropped_img2023[[6]]+cropped_img2023[[3]])
+NDVI_2024<- DVI_2024/(cropped_img2024[[6]]+cropped_img2024[[3]])
+
+
+
+
+par(mfrow = c(3, 3),mar = c(1, 1, 2, 1))    
+
+cl1 <- colorRampPalette(c("darkblue", "lightgrey", "darkorange"))(100)
+
+
+
+plot(NDVI_2017, col = cl1, main = "NDVI_2017")
+plot(NDVI_2018, col = cl1, main = "NDVI_2018")
+plot(NDVI_2019, col = cl1, main = "NDVI_2019")
+plot(NDVI_2020, col = cl1, main = "NDVI_2020")
+plot(NDVI_2021, col = cl1, main = "NDVI_2021")
+plot(NDVI_2022, col = cl1, main = "NDVI_2022")
+plot(NDVI_2023, col = cl1, main = "NDVI_2023")
+plot(NDVI_2024, col = cl1, main = "NDVI_2024")
+dev.off()
+
+
+#differenza tra gli anni 
+
+NDVI_dif <- NDVI_2017-NDVI_2024
+
+cl2 <- viridis(100)
+plot(NDVI_dif,col=cl2, main= "NDVI difference 2017-2024")
+
+dev.off()
+
+
+
+#NBR (Normalized burn ratio)
+
+
+# NBR = (NIR - SWIR(II)) / (NIR + SWIR(II))
+
+NBR_2017 <- (cropped_img2017[[6]]-cropped_img2017[[5]])/(cropped_img2017[[6]]+cropped_img2017[[5]])
+NBR_2018 <- (cropped_img2018[[6]]-cropped_img2018[[5]])/(cropped_img2018[[6]]+cropped_img2018[[5]])
+NBR_2019 <- (cropped_img2019[[6]]-cropped_img2019[[5]])/(cropped_img2019[[6]]+cropped_img2019[[5]])
+NBR_2020 <- (cropped_img2020[[6]]-cropped_img2020[[5]])/(cropped_img2020[[6]]+cropped_img2020[[5]])
+NBR_2021 <- (cropped_img2021[[6]]-cropped_img2021[[5]])/(cropped_img2021[[6]]+cropped_img2021[[5]])
+NBR_2022 <- (cropped_img2022[[6]]-cropped_img2022[[5]])/(cropped_img2022[[6]]+cropped_img2022[[5]])
+NBR_2023 <- (cropped_img2023[[6]]-cropped_img2023[[5]])/(cropped_img2023[[6]]+cropped_img2023[[5]])
+NBR_2024 <- (cropped_img2024[[6]]-cropped_img2024[[5]])/(cropped_img2024[[6]]+cropped_img2024[[5]])
+
+par(mfrow = c(3,3),mar = c(1, 1, 2, 1))    
+plot(NBR_2017, col = cl1, main = "NBR_2017")
+plot(NBR_2018, col = cl1, main = "NBR_2018")
+plot(NBR_2019, col = cl1, main = "NBR_2019")
+plot(NBR_2020, col = cl1, main = "NBR_2020")
+plot(NBR_2021, col = cl1, main = "NBR_2021")
+plot(NBR_2022, col = cl1, main = "NBR_2022")
+plot(NBR_2023, col = cl1, main = "NBR_2023")
+plot(NBR_2024, col = cl1, main = "NBR_2024")
+
+dev.off()
+
+
+# Calcolo differenza fra NBR_2020 e NBR_2024
+NBR_dif <- NBR_2017 - NBR_2024
+
+plot(NBR_dif, col = cl2, main = "NRB difference 2017-2024")
+dev.off()
+
+
+
+
+
+## MSI (MOISTURE STRESS INDEX) 
+
+# MSI = SWIR(I) / NIR
+MSI_2017 <- cropped_img2017[[4]]-cropped_img2017[[6]]
+MSI_2018 <- cropped_img2018[[4]]-cropped_img2018[[6]]
+MSI_2019 <- cropped_img2019[[4]]-cropped_img2019[[6]]
+MSI_2020 <- cropped_img2020[[4]]-cropped_img2020[[6]]
+MSI_2021 <- cropped_img2021[[4]]-cropped_img2021[[6]]
+MSI_2022 <- cropped_img2022[[4]]-cropped_img2022[[6]]
+MSI_2023 <- cropped_img2023[[4]]-cropped_img2023[[6]]
+MSI_2024 <- cropped_img2024[[4]]-cropped_img2024[[6]]
+
+
+
+#plot MSI 
+
+
+par(mfrow = c(3,3), mar = c(1, 1, 2, 1)) 
+plot(MSI_2017, col = cl1, main = "MSI_2017")
+plot(MSI_2018, col = cl1, main = "MSI_2018")
+plot(MSI_2019, col = cl1, main = "MSI_2019")
+plot(MSI_2020, col = cl1, main = "MSI_2020")
+plot(MSI_2021, col = cl1, main = "MSI_2021")
+plot(MSI_2022, col = cl1, main = "MSI_2022")
+plot(MSI_2023, col = cl1, main = "MSI_2023")
+plot(MSI_2024, col = cl1, main = "MSI_2024")
+dev.off()
+
+#calcolo differenza MSI 
+MSI_dif <- MSI_2017 - MSI_2024
+plot(MSI_dif, col = cl2, main = "MSI difference 2017-2024")
+dev.off()
+
+plot(NDVI_dif, col = cl2, main = "NDVI difference 2017-2024")
+plot(NBR_dif, col = cl2, main = "NBR difference 2017-2024")
+plot(MSI_dif, col = cl2, main = "MSI difference 2017-2024")
+
+dev.off()
+
+
+
+##### Land Cover 
+
+
+##############classificazione 
+
+
+
+# ottengo i valori
+
+values_2017 <- getValues(cropped_img2017)
+values_2018 <- getValues(cropped_img2018)
+values_2019 <- getValues(cropped_img2019)
+values_2020 <- getValues(cropped_img2020)
+values_2021 <- getValues(cropped_img2021)
+values_2022 <- getValues(cropped_img2022)
+values_2023 <- getValues(cropped_img2023)
+values_2024 <- getValues(cropped_img2024)
+
+#faccio la classificazione 
+
+kcluster_2017 <- kmeans(values_2017, centers = 3)
+kcluster_2018 <- kmeans(values_2018, centers = 3)
+kcluster_2019 <- kmeans(values_2019, centers = 3)
+kcluster_2020 <- kmeans(values_2020, centers = 3)
+kcluster_2021 <- kmeans(values_2021, centers = 3)
+kcluster_2022 <- kmeans(values_2022, centers = 3)
+kcluster_2023 <- kmeans(values_2023, centers = 3)
+kcluster_2024 <- kmeans(values_2024, centers = 3)
+
+
+#setto i valori
+
+class_2017 <- setValues(cropped_img2017[[3]], kcluster_2017$cluster)
+class_2018 <- setValues(cropped_img2018[[3]], kcluster_2018$cluster)
+class_2019 <- setValues(cropped_img2019[[3]], kcluster_2019$cluster)
+class_2020 <- setValues(cropped_img2020[[3]], kcluster_2020$cluster)
+class_2021 <- setValues(cropped_img2021[[3]], kcluster_2021$cluster)
+class_2022 <- setValues(cropped_img2022[[3]], kcluster_2022$cluster)
+class_2023 <- setValues(cropped_img2023[[3]], kcluster_2023$cluster)
+class_2024 <- setValues(cropped_img2024[[3]], kcluster_2024$cluster)
+
+
+
+#Plots
+
+cl3 <- colorRampPalette(c("blue", "white", "orange"))(3)
+par(mfrow= c(3,3),mar = c(1, 1, 2, 1))    
+
+
+plot(class_2017, col=cl3, main = "2017")
+plot(class_2018, col=cl3, main = "2018")
+plot(class_2019, col=cl3, main = "2019")
+plot(class_2020, col=cl3, main = "2020")
+plot(class_2021, col=cl3, main = "2021")
+plot(class_2022, col=cl3, main = "2022")
+plot(class_2023, col=cl3, main = "2023")
+plot(class_2024, col=cl3, main = "2024")
+
+
+pdf()
+# class 1: suolo nudo, aree urbane, assenza di vegetazione
+# class 2: bassa vegetation,
+# class 3: foresta, terreno coperto da alberi
+
+
+
+
+dev.off()
+
+####percentuali######
+
+#######Creo un data frame vuoto per memorizzare i risultati
+
+
+results <- data.frame(RasterName = character(0),
+                      Class1_Frequency = numeric(0),
+                      Class2_Frequency = numeric(0),
+                      Class3_Frequency = numeric(0),
+                      Class1_Percentage = numeric(0),
+                      Class2_Percentage = numeric(0),
+                      Class3_Percentage = numeric(0))
+results
+# Creazione della lista di raster per gli anni desiderati
+
+classes <- list(class_2017,class_2018,class_2019,class_2020,class_2021,class_2022,class_2023,class_2024)
+classes
+
+# Itera attraverso gli anni
+for (i in 1:length(classes)) {
+  
+  # ottengo l'oggetto raster
+  
+  raster_obj <- classes[[i]]  
+  
+  
+  #valori dei pixel 
+  
+  values <- getValues(raster_obj)
+  values
+  #calcolo le frequenze 
+  
+  class1_freq <- sum(values == 1)  # Assuming class 1 is represented by value 1
+  class2_freq <- sum(values == 2)  # Assuming class 2 is represented by value 2
+  class3_freq <- sum(values == 3)  # Assuming class 3 is represented by value 3
+  
+  
+  # Calcolo le percentuali
+  total_pixels <- length(values)
+  total_pixels
+  
+  class1_percentage <- round((class1_freq / total_pixels) * 100, 1)
+  class2_percentage <- round((class2_freq / total_pixels) * 100, 1)
+  class3_percentage <- round((class3_freq / total_pixels) * 100, 1)
+  
+  
+  
+  # Store the results
+  results <- rbind(results, data.frame(RasterName = names(raster_obj),
+                                       Class1_Frequency = class1_freq,
+                                       Class2_Frequency = class2_freq,
+                                       Class3_Frequency = class3_freq,
+                                       Class1_Percentage = class1_percentage,
+                                       Class2_Percentage = class2_percentage,
+                                       Class3_Percentage = class3_percentage))
+}
+
+
+
+
+#uso i risultati di cui ho bisogno 
+
+print(results)
+
+
+
+
+
+
+#### Guardo le immagini per assegnare i valori alle classi giuste
+
+### Poi li salvo in un dataframe per fare alcuni grafici
+
+######### Creo il dataframe con i risultati per ogni classe
+
+
+
+
+
+
+
+df_classes <- data.frame(year = c(2017,2018,2019,2020, 2021, 2022, 2023, 2024),
+                         suolo_nudo = c(15.4,18.0,18.7,16.9,17.7,15.7,11.9,16.7),
+                         bassa_vegetazione = c(39.5,36.8,35.8,35.8,33.5,33.2,42.0,32.5),
+                         forest = c(45.1,45.2,45.5,47.3,48.7,51.1,46.1,50.8))
+df_classes
+
+
+
+
+
+############ risultati finali##############
+
+
+classes_long <- pivot_longer(df_classes, -year, names_to = "class", values_to = "percentage") # convertire il dataframe da formato largo a formato lungo
+classes_long
+classes_long$class <- factor(classes_long$class, levels = c("suolo_nudo", "bassa_vegetazione", "forest"))
+classes_long
+# Grafico a barre
+classes_long %>% 
+  ggplot(aes(x = factor(year), y = percentage, fill = class))+
+  geom_bar(stat = "identity", position = "dodge", width = 0.7) +
+  labs(title = "Land cover in Sila's park by Year",
+       x = "Year",
+       y = "Percentage") +
+  scale_fill_manual(values = c("lightgoldenrod2", "chartreuse3", "darkgreen"),
+                    name = "Class",
+                    labels = c("bare soil", "low vegetation", "forest")) +
+  theme_bw()+
+  theme(legend.position = "bottom")
+#ggsave("plot_bar.pdf")
+
+# Grafico a linee 
+classes_long %>% 
+  ggplot(aes(x = year, y = percentage, color = class)) +
+  geom_line(linewidth = 2) +
+  labs(title = "Land cover in Sila's park by Year",
+       x = "Year",
+       y = "Percentage") +
+  scale_color_manual(values = c("lightgoldenrod2", "chartreuse3", "darkgreen"),
+                     name = "Class",
+                     labels = c("bare soil", "low vegetation", "forest")) +
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  theme(legend.text = element_text(size = 11))
+#ggsave("plot_line.pdf")
+
+
+
+
+
+# Unisco gli indici NDVI_def e MSAVI_def in un unico oggetto
+box <- stack(NDVI_dif, NBR_dif, MSI_dif)
+
+# Plot
+plot(box, col = cl2, main = "Differenze fra NDVI_def, NBR_def, MSI_def", xaxt = "n", yaxt = "n")
+
+# Effettuo un campionamento casuale di 10000 pixel da box
+sr <- sampleRandom(box, 10000)
+
+# Effettuo la PCA (Principal Component Analysis)
+PCA <- prcomp(sr)
+
+# Visualizzazione delle informazioni relative alla PCA
+summary(PCA)
+
+# Plot della varianza spiegata da ciascuna delle componenti
+plot(PCA)
+
+# Proiezione dell'oggetto box nello spazio creato precedentemente usando le CP
+PCI <- predict(box, PCA, index = 1:3)
+PCI
+
+# Plot della PC1
+plot(PCI[[1]], col = cl2,)
+
+
+dev.off()
