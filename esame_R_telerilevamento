@@ -1,3 +1,10 @@
+#####Progetto sul parco della Sila, la zona del monte Paleparto
+########Recupero le immagini satellitari da Sentinel-2
+##### L'obbiettivo è quello di monitorare la salute vegetativa e di
+#osservare e come variano le componenti ambientali dal 2017 al 2024 
+# in seguito a eventulali fattori antropici e ad incendi
+
+
 #installo i pacchetti che mi interessano
 
 install.packages("raster")
@@ -6,8 +13,8 @@ install.packages("viridis")
 install.packages("rasterVis")
 install.packages("tidyr")       
 install.packages("cleaR")
-#carico i pacchetti scaricati
 
+#carico i pacchetti scaricati
 library(raster) 
 library(ggplot2)
 library(viridis)
@@ -20,39 +27,48 @@ library(cleaR)
 setwd("C:/0_pontepaleparto")
 
 
+
+#Importazione e visualizzazione IMMAGINI Sentinel2:
+# Le immagini satellitari utilizzate sono state prodotte da Sentinel 2
+
+# Layers <- 1 = BLUE, 2 = GREEN, 3 = RED, 4 = SWIR I, 5 = SWIR II, 6 = NIR
+
+#2017
+#creo una lista con gli oggetti in comune
 rlist_2017<-list.files(pattern = "2017-06-09")
 rlist_2017
-
+#applico la funzione raster e carico le immagini raster
 import_2017 <- lapply(rlist_2017, raster)
 import_2017
-
+#unisco tutte le bande in un unico vettore 
 img2017 <- stack(import_2017)
 img2017
+#cambio il titolo di ogni banda per quando devo plottare 
 names(img2017) <- c("B02", "B03", "B04", "B11", "B12", "B8A")
 img2017
 
 
-
+#plotto l'immagine con le 6 bande 
 plot(img2017)
 dev.off()
 
+#estraggo solo la zona del Monte Paleparto inserendo le coordinate che mi interessano
 ext <- extent(16.49635951016795, 16.648771310760726, 39.406318433149934, 39.50102523622246)
 cropped_img2017 <- crop(img2017, ext)
 cropped_img2017
 
 
 
-
+#pdf
 pdf("img2017.pdf")
-
+#plotto l'immagine ritagliata TRUE COLOR e NIR
 par(mfrow = c(1,2))
-
 plotRGB(cropped_img2017,3,2,1, stretch = "lin")
 plotRGB(cropped_img2017,6,3,2, stretch = "lin")
 dev.off()
 
 
-
+#faccio la stessa cosa anni 2018-2024
 rlist_2018<- list.files(pattern = "2018-07-04")
 rlist_2019<- list.files(pattern = "2019-07-24")
 rlist_2020<- list.files(pattern = "2020-07-28")
@@ -131,7 +147,9 @@ dev.off()
 
 
 
-par(mfrow = c(3,3))
+par(mfrow = c(3,3),mar = c(2, 3, 2, 3)) 
+
+
 plotRGB(cropped_img2017,3,2,1, stretch = "lin", main ="2017_TC")
 plotRGB(cropped_img2018,3,2,1, stretch = "lin", main ="2018_TC")
 plotRGB(cropped_img2019,3,2,1, stretch = "lin", main ="2019_TC")
@@ -145,22 +163,33 @@ plotRGB(cropped_img2024,3,2,1, stretch = "lin", main ="2024_TC")
 dev.off()
 
 
+
+
 par(mfrow = c(3,3))
-plotRGB(cropped_img2017,6,3,2, stretch = "lin", main ="2017_TC")
-plotRGB(cropped_img2018,6,3,2, stretch = "lin", main ="2018_TC")
-plotRGB(cropped_img2019,6,3,2, stretch = "lin", main ="2019_TC")
-plotRGB(cropped_img2020,6,3,2, stretch = "lin", main ="2020_TC")
-plotRGB(cropped_img2021,6,3,2, stretch = "lin", main ="2021_TC")
-plotRGB(cropped_img2022,6,3,2, stretch = "lin", main ="2022_TC")
-plotRGB(cropped_img2023,6,3,2, stretch = "lin", main ="2023_TC")
-plotRGB(cropped_img2024,6,3,2, stretch = "lin", main ="2024_TC")
+
+plotRGB(cropped_img2017,6,3,2, stretch = "lin", main = "2017_TC")
+plotRGB(cropped_img2018,6,3,2, stretch = "lin", main = "2018_TC")
+plotRGB(cropped_img2019,6,3,2, stretch = "lin", main = "2019_TC")
+plotRGB(cropped_img2020,6,3,2, stretch = "lin", main = "2020_TC")
+plotRGB(cropped_img2021,6,3,2, stretch = "lin", main = "2021_TC")
+plotRGB(cropped_img2022,6,3,2, stretch = "lin", main = "2022_TC")
+plotRGB(cropped_img2023,6,3,2, stretch = "lin", main = "2023_TC")
+plotRGB(cropped_img2024,6,3,2, stretch = "lin", main = "2024_TC")
+
+
+
 
 
 dev.off()
 
+########## INDICI SPETTRALI
 
-#NDVI
+#NDVI (NORMALIZED DIFFERENCE VEGETATION INDEX) -----
+# NDVI è un indice applicato per quantificare la salute e la densità della vegetazione
+# range da -1 a +1
 
+
+# DVI = NIR - rosso
 DVI_2017<- cropped_img2017[[6]]-cropped_img2017[[3]]
 DVI_2018<- cropped_img2018[[6]]-cropped_img2018[[3]]
 DVI_2019<- cropped_img2019[[6]]-cropped_img2019[[3]]
@@ -170,8 +199,7 @@ DVI_2022<- cropped_img2022[[6]]-cropped_img2022[[3]]
 DVI_2023<- cropped_img2023[[6]]-cropped_img2023[[3]]
 DVI_2024<- cropped_img2024[[6]]-cropped_img2024[[3]]
 
-
-
+# NDVI = (NIR - rosso) / (NIR + rosso) = DVI / (NIR + rosso)
 NDVI_2017<- DVI_2017/(cropped_img2017[[6]]+cropped_img2017[[3]])
 NDVI_2018<- DVI_2018/(cropped_img2018[[6]]+cropped_img2018[[3]])
 NDVI_2019<- DVI_2019/(cropped_img2019[[6]]+cropped_img2019[[3]])
@@ -184,9 +212,9 @@ NDVI_2024<- DVI_2024/(cropped_img2024[[6]]+cropped_img2024[[3]])
 
 
 
-par(mfrow = c(3, 3),mar = c(1, 1, 2, 1))    
+par(mfrow = c(3, 3),mar = c(2, 3, 2, 3)) ### mar= spazio ai margini   
 
-cl1 <- colorRampPalette(c("darkblue", "lightgrey", "darkorange"))(100)
+cl1 <-cividis(100)    # cividis buono per i daltonici
 
 
 
@@ -210,10 +238,13 @@ plot(NDVI_dif,col=cl2, main= "NDVI difference 2017-2024")
 
 dev.off()
 
-
+# più è alta la differenza, maggiore è la perdita di vegetazione
+# se la differenza è negativa significa che c'è un guadagno nella vegetazione
+# ci interessa soprattutto la perdita e l'aumento della copertura forestale
 
 #NBR (Normalized burn ratio)
-
+# Indice spettrale applicato principalmente per identificare aree bruciate e 
+# monitorare la rigenerazione della vegetazione post-incendio.
 
 # NBR = (NIR - SWIR(II)) / (NIR + SWIR(II))
 
@@ -226,7 +257,7 @@ NBR_2022 <- (cropped_img2022[[6]]-cropped_img2022[[5]])/(cropped_img2022[[6]]+cr
 NBR_2023 <- (cropped_img2023[[6]]-cropped_img2023[[5]])/(cropped_img2023[[6]]+cropped_img2023[[5]])
 NBR_2024 <- (cropped_img2024[[6]]-cropped_img2024[[5]])/(cropped_img2024[[6]]+cropped_img2024[[5]])
 
-par(mfrow = c(3,3),mar = c(1, 1, 2, 1))    
+par(mfrow = c(3,3),mar = c(2, 3, 2, 3))    
 plot(NBR_2017, col = cl1, main = "NBR_2017")
 plot(NBR_2018, col = cl1, main = "NBR_2018")
 plot(NBR_2019, col = cl1, main = "NBR_2019")
@@ -239,7 +270,7 @@ plot(NBR_2024, col = cl1, main = "NBR_2024")
 dev.off()
 
 
-# Calcolo differenza fra NBR_2020 e NBR_2024
+# Calcolo differenza fra NBR_2017 e NBR_2024
 NBR_dif <- NBR_2017 - NBR_2024
 
 plot(NBR_dif, col = cl2, main = "NRB difference 2017-2024")
@@ -250,7 +281,9 @@ dev.off()
 
 
 ## MSI (MOISTURE STRESS INDEX) 
-
+# Indice spettrale che misura lo stress idrico nella vegetazione
+# Valuta il contenuto di umidità nelle piante, è utile per monitare siccità e 
+# stress idrico nelle aree forestali.
 # MSI = SWIR(I) / NIR
 MSI_2017 <- cropped_img2017[[4]]-cropped_img2017[[6]]
 MSI_2018 <- cropped_img2018[[4]]-cropped_img2018[[6]]
@@ -266,7 +299,7 @@ MSI_2024 <- cropped_img2024[[4]]-cropped_img2024[[6]]
 #plot MSI 
 
 
-par(mfrow = c(3,3), mar = c(1, 1, 2, 1)) 
+par(mfrow = c(3,3), mar = c(2, 4, 2, 4)) 
 plot(MSI_2017, col = cl1, main = "MSI_2017")
 plot(MSI_2018, col = cl1, main = "MSI_2018")
 plot(MSI_2019, col = cl1, main = "MSI_2019")
@@ -282,6 +315,7 @@ MSI_dif <- MSI_2017 - MSI_2024
 plot(MSI_dif, col = cl2, main = "MSI difference 2017-2024")
 dev.off()
 
+## Confronto visivo fra i risultati delle analisi temporali dei vari indici
 plot(NDVI_dif, col = cl2, main = "NDVI difference 2017-2024")
 plot(NBR_dif, col = cl2, main = "NBR difference 2017-2024")
 plot(MSI_dif, col = cl2, main = "MSI difference 2017-2024")
@@ -335,8 +369,8 @@ class_2024 <- setValues(cropped_img2024[[3]], kcluster_2024$cluster)
 
 #Plots
 
-cl3 <- colorRampPalette(c("blue", "white", "orange"))(3)
-par(mfrow= c(3,3),mar = c(1, 1, 2, 1))    
+cl3 <- colorRampPalette(c("blue", "white", "red"))(3)
+par(mfrow= c(3,3),mar = c(2, 3, 2, 3))   
 
 
 plot(class_2017, col=cl3, main = "2017")
@@ -350,8 +384,8 @@ plot(class_2024, col=cl3, main = "2024")
 
 
 pdf()
-# class 1: suolo nudo, aree urbane, assenza di vegetazione
-# class 2: bassa vegetation,
+# class 1: suolo nudo
+# class 2: bassa vegetatione,
 # class 3: foresta, terreno coperto da alberi
 
 
@@ -443,7 +477,7 @@ print(results)
 df_classes <- data.frame(year = c(2017,2018,2019,2020, 2021, 2022, 2023, 2024),
                          suolo_nudo = c(15.4,18.0,18.7,16.9,17.7,15.7,11.9,16.7),
                          bassa_vegetazione = c(39.5,36.8,35.8,35.8,33.5,33.2,42.0,32.5),
-                         forest = c(45.1,45.2,45.5,47.3,48.7,51.1,46.1,50.8))
+                         foresta = c(45.1,45.2,45.5,47.3,48.7,51.1,46.1,50.8))
 df_classes
 
 
@@ -455,18 +489,18 @@ df_classes
 
 classes_long <- pivot_longer(df_classes, -year, names_to = "class", values_to = "percentage") # convertire il dataframe da formato largo a formato lungo
 classes_long
-classes_long$class <- factor(classes_long$class, levels = c("suolo_nudo", "bassa_vegetazione", "forest"))
+classes_long$class <- factor(classes_long$class, levels = c("suolo_nudo", "bassa_vegetazione", "foresta"))
 classes_long
 # Grafico a barre
 classes_long %>% 
   ggplot(aes(x = factor(year), y = percentage, fill = class))+
   geom_bar(stat = "identity", position = "dodge", width = 0.7) +
-  labs(title = "Land cover in Sila's park by Year",
-       x = "Year",
-       y = "Percentage") +
+  labs(title = "Copertura del suolo del monte Paleparto",
+       x = "Anno",
+       y = "Percentuale") +
   scale_fill_manual(values = c("lightgoldenrod2", "chartreuse3", "darkgreen"),
-                    name = "Class",
-                    labels = c("bare soil", "low vegetation", "forest")) +
+                    name = "Classe",
+                    labels = c("suolo nudo", "bassa vegetazione", "foresta")) +
   theme_bw()+
   theme(legend.position = "bottom")
 #ggsave("plot_bar.pdf")
@@ -475,12 +509,12 @@ classes_long %>%
 classes_long %>% 
   ggplot(aes(x = year, y = percentage, color = class)) +
   geom_line(linewidth = 2) +
-  labs(title = "Land cover in Sila's park by Year",
-       x = "Year",
-       y = "Percentage") +
+  labs(title = "Copertura del suolo del monte Paleparto",
+       x = "Anno",
+       y = "Percentuale") +
   scale_color_manual(values = c("lightgoldenrod2", "chartreuse3", "darkgreen"),
-                     name = "Class",
-                     labels = c("bare soil", "low vegetation", "forest")) +
+                     name = "Classe",
+                     labels = c("Suolo nudo", "bassa vegetazione", "foresta")) +
   theme_bw()+
   theme(legend.position = "bottom")+
   theme(legend.text = element_text(size = 11))
@@ -489,31 +523,8 @@ classes_long %>%
 
 
 
-
-# Unisco gli indici NDVI_def e MSAVI_def in un unico oggetto
-box <- stack(NDVI_dif, NBR_dif, MSI_dif)
-
-# Plot
-plot(box, col = cl2, main = "Differenze fra NDVI_def, NBR_def, MSI_def", xaxt = "n", yaxt = "n")
-
-# Effettuo un campionamento casuale di 10000 pixel da box
-sr <- sampleRandom(box, 10000)
-
-# Effettuo la PCA (Principal Component Analysis)
-PCA <- prcomp(sr)
-
-# Visualizzazione delle informazioni relative alla PCA
-summary(PCA)
-
-# Plot della varianza spiegata da ciascuna delle componenti
-plot(PCA)
-
-# Proiezione dell'oggetto box nello spazio creato precedentemente usando le CP
-PCI <- predict(box, PCA, index = 1:3)
-PCI
-
-# Plot della PC1
-plot(PCI[[1]], col = cl2,)
-
-
-dev.off()
+ 
+  
+  
+  
+ 
