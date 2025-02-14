@@ -12,7 +12,7 @@ install.packages("ggplot2")
 install.packages("viridis")
 install.packages("rasterVis")
 install.packages("tidyr")       
-install.packages("cleaR")
+
 
 #carico i pacchetti scaricati
 library(raster) 
@@ -20,7 +20,7 @@ library(ggplot2)
 library(viridis)
 library(rasterVis)
 library(tidyr)
-library(cleaR)
+
 
 #setto la working directory
 
